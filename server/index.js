@@ -3,6 +3,7 @@ const app = express()
 const bodyParser = require('body-parser');
 const database = require('./database')
 
+app.use(express.static('build'))
 app.use(bodyParser.json())
 
 app.delete('/comments/:id', function(req, res) {

@@ -9,8 +9,9 @@
   },
   "scripts": {
     "start": "node ./server/index.js",
-    "dev": "webpack-dev-server --inline --content-base ./build",
-    "build": "webpack --inline --colors --progress --display-error-details --display-cached"
+    "production": "webpack --inline --colors --progress --display-error-details --display-cached -p",
+    "build": "webpack --inline --colors --progress --display-error-details --display-cached",
+    "watch": "npm run build -- --watch"
   },
   "author": "Shahar Kedar",
   "homepage": "https://github.com/bigpandaio/frontend-exercise-backend#readme",
