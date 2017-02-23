@@ -12,6 +12,7 @@ class CommentsList extends React.Component {
 
     this.state = {
       comments: [],
+      currentCommentId: null,
       deleteModalIsOpen: false
     };
   }
@@ -27,18 +28,27 @@ class CommentsList extends React.Component {
 
   actionHandler(commentId, action) {
     console.log(action, commentId);
-    this.setState({deleteModalIsOpen: true});
+    this.setState({deleteModalIsOpen: true, currentCommentId: commentId});
   }
 
   closeModal() {
     this.setState({
       deleteModalIsOpen: false,
-      editModalIsOpen: false
+      editModalIsOpen: false,
+      currentCommentId: null
     });
   }
 
   doDelete() {
-
+    axios.delete(`/comments/${this.state.currentCommentId}`)
+      .then(res => {
+        console.log(res.data);
+        const comments = this.state.comments.filter(comment => {
+          return comment.id !== this.state.currentCommentId;
+        })
+        this.setState({comments});
+        this.closeModal();
+      });
   }
 
   render() {
