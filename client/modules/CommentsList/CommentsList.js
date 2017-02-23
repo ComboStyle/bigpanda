@@ -3,12 +3,16 @@ import axios from 'axios';
 import Comment from '../Comment/Comment';
 import Modal from 'react-modal';
 
+// css
+import css from './CommentsList.scss';
+
 class CommentsList extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      comments: []
+      comments: [],
+      deleteModalIsOpen: false
     };
   }
 
@@ -23,9 +27,31 @@ class CommentsList extends React.Component {
 
   actionHandler(commentId, action) {
     console.log(action, commentId);
+    this.setState({deleteModalIsOpen: true});
+  }
+
+  closeModal() {
+    this.setState({
+      deleteModalIsOpen: false,
+      editModalIsOpen: false
+    });
+  }
+
+  doDelete() {
+
   }
 
   render() {
+    const customStyles = {
+      content : {
+        top                   : '50%',
+        left                  : '50%',
+        right                 : 'auto',
+        bottom                : 'auto',
+        marginRight           : '-50%',
+        transform             : 'translate(-50%, -50%)'
+      }
+    };
     return (
       <div>
         <ul className="list-group">
@@ -36,20 +62,18 @@ class CommentsList extends React.Component {
         
         <Modal
           isOpen={this.state.deleteModalIsOpen}
-          onAfterOpen={this.afterOpenModal}
-          onRequestClose={this.closeModal}
+          onRequestClose={this.closeModal.bind(this)}
+          style={customStyles}
           contentLabel="Delete"
         >
-          <h2 ref="subtitle">Hello</h2>
-          <button onClick={this.closeModal}>close</button>
-          <div>I am a modal</div>
-          <form>
-            <input />
-            <button>tab navigation</button>
-            <button>stays</button>
-            <button>inside</button>
-            <button>the modal</button>
-          </form>
+          <div className="deleteModal">
+            <h2>Delete</h2>
+            <div className="buttons">
+              <button onClick={this.closeModal.bind(this)} className="btn btn-default btn-lg">No</button>
+              <button onClick={this.doDelete.bind(this)} className="btn btn-danger btn-lg">Yes</button>
+            </div>
+          </div>
+
         </Modal>
 
       </div>
