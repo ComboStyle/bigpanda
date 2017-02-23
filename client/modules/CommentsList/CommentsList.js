@@ -12,8 +12,9 @@ class CommentsList extends React.Component {
 
     this.state = {
       comments: [],
-      currentCommentId: null,
-      deleteModalIsOpen: false
+      currentComment: {},
+      deleteModalIsOpen: false,
+      editModalIsOpen: false
     };
   }
 
@@ -28,7 +29,9 @@ class CommentsList extends React.Component {
 
   actionHandler(comment, action) {
     console.log(action, comment);
-    var state = {currentComment: comment};
+    // set the draft to be the comment itself at the start if non exists
+    comment.draft = comment.draft || comment.comment;
+    let state = {currentComment: comment};
     if (action === 'delete') {
       state.deleteModalIsOpen = true;
     } else if (action === 'edit') {
@@ -41,7 +44,7 @@ class CommentsList extends React.Component {
     this.setState({
       deleteModalIsOpen: false,
       editModalIsOpen: false,
-      currentComment: null
+      currentComment: {}
     });
   }
 
@@ -58,7 +61,22 @@ class CommentsList extends React.Component {
   }
 
   doEdit() {
+    let currentComment = this.state.currentComment;
+    // save the draft
+    currentComment.comment = currentComment.draft;
+    axios.put(`/comments/${this.state.currentComment.id}`, currentComment)
+      .then(res => {
+        console.log(res.data);
+        this.setState({currentComment});
+        this.closeModal();
+      });
+  }
 
+  onCommentChange(event) {
+    console.log(event.target.value);
+    let currentComment = this.state.currentComment;
+    currentComment.draft = event.target.value;
+    this.setState({currentComment});
   }
 
   render() {
@@ -104,7 +122,10 @@ class CommentsList extends React.Component {
           <div className="modalBasic">
             <h2>Edit</h2>
             <div>
-              <textarea value={'d'}/>
+              <textarea 
+                value={this.state.currentComment.draft}
+                onChange={this.onCommentChange.bind(this)}
+              />
             </div>
             <div className="buttons">
               <button onClick={this.closeModal.bind(this)} className="btn btn-default btn-lg">Cancel</button>
