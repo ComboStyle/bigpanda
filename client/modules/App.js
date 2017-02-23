@@ -5,7 +5,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="well">
-        BigPanda!
+        <h1>BigPanda Message Board!</h1>
         <CommentsList />
       </div>
     );

@@ -23,7 +23,7 @@ class CommentsList extends React.Component {
   render() {
     return (
       <div>
-        <ul>
+        <ul className="list-group">
         {this.state.comments.map(comment =>
             <Comment key={comment.id} data={comment} />  
         )}
