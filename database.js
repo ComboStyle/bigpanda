@@ -5,9 +5,9 @@ const _ = require('lodash');
 const names = ["john", "joe", "sophie", "mary.ann", "shlomi", "jospeh", "the.dude"]
 const entries = {}
 
-_.times(5).each(function() {
+_.times(5).forEach(function() {
     insert(lorem())
-}
+})
 
 function list() {
     return _.values(entries)
