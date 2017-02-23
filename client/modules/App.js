@@ -1,7 +1,15 @@
-import React from 'react'
+import React from 'react';
+import CommentsList from './CommentsList/CommentsList';
 
-export default React.createClass({
+class App extends React.Component {
   render() {
-    return <div>Hello React!!</div>
+    return (
+      <div className="well">
+        BigPanda!
+        <CommentsList />
+      </div>
+    );
   }
-})
+}
+
+export default App;
