@@ -28,7 +28,13 @@ class CommentsList extends React.Component {
 
   actionHandler(commentId, action) {
     console.log(action, commentId);
-    this.setState({deleteModalIsOpen: true, currentCommentId: commentId});
+    var state = {currentCommentId: commentId};
+    if (action === 'delete') {
+      state.deleteModalIsOpen = true;
+    } else if (action === 'edit') {
+      state.editModalIsOpen = true;
+    }
+    this.setState(state);
   }
 
   closeModal() {
@@ -49,6 +55,10 @@ class CommentsList extends React.Component {
         this.setState({comments});
         this.closeModal();
       });
+  }
+
+  doEdit() {
+
   }
 
   render() {
@@ -76,14 +86,28 @@ class CommentsList extends React.Component {
           style={customStyles}
           contentLabel="Delete"
         >
-          <div className="deleteModal">
+          <div className="modalBasic">
             <h2>Delete</h2>
             <div className="buttons">
               <button onClick={this.closeModal.bind(this)} className="btn btn-default btn-lg">No</button>
               <button onClick={this.doDelete.bind(this)} className="btn btn-danger btn-lg">Yes</button>
             </div>
           </div>
+        </Modal>
 
+        <Modal
+          isOpen={this.state.editModalIsOpen}
+          onRequestClose={this.closeModal.bind(this)}
+          style={customStyles}
+          contentLabel="Edit"
+        >
+          <div className="modalBasic">
+            <h2>Edit</h2>
+            <div className="buttons">
+              <button onClick={this.closeModal.bind(this)} className="btn btn-default btn-lg">Cancel</button>
+              <button onClick={this.doEdit.bind(this)} className="btn btn-danger btn-lg">Save</button>
+            </div>
+          </div>
         </Modal>
 
       </div>
