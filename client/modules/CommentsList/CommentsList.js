@@ -26,9 +26,9 @@ class CommentsList extends React.Component {
       });
   }
 
-  actionHandler(commentId, action) {
-    console.log(action, commentId);
-    var state = {currentCommentId: commentId};
+  actionHandler(comment, action) {
+    console.log(action, comment);
+    var state = {currentComment: comment};
     if (action === 'delete') {
       state.deleteModalIsOpen = true;
     } else if (action === 'edit') {
@@ -41,16 +41,16 @@ class CommentsList extends React.Component {
     this.setState({
       deleteModalIsOpen: false,
       editModalIsOpen: false,
-      currentCommentId: null
+      currentComment: null
     });
   }
 
   doDelete() {
-    axios.delete(`/comments/${this.state.currentCommentId}`)
+    axios.delete(`/comments/${this.state.currentComment.id}`)
       .then(res => {
         console.log(res.data);
         const comments = this.state.comments.filter(comment => {
-          return comment.id !== this.state.currentCommentId;
+          return comment.id !== this.state.currentComment.id;
         })
         this.setState({comments});
         this.closeModal();
@@ -76,7 +76,7 @@ class CommentsList extends React.Component {
       <div>
         <ul className="list-group">
         {this.state.comments.map(comment =>
-            <Comment key={comment.id} data={comment} onAction={this.actionHandler.bind(this, comment.id)}/>  
+            <Comment key={comment.id} data={comment} onAction={this.actionHandler.bind(this, comment)}/>  
         )}
         </ul>
         
@@ -103,6 +103,9 @@ class CommentsList extends React.Component {
         >
           <div className="modalBasic">
             <h2>Edit</h2>
+            <div>
+              <textarea value={'d'}/>
+            </div>
             <div className="buttons">
               <button onClick={this.closeModal.bind(this)} className="btn btn-default btn-lg">Cancel</button>
               <button onClick={this.doEdit.bind(this)} className="btn btn-danger btn-lg">Save</button>
