@@ -2,8 +2,8 @@
 
 ## Instructions
 1. `npm install`
-2. you may need to `npm install -g webpack` (if you get an error that webpack wasn't found)
-3. `npm run build` OR `npm run watch` (if you want to play with the code)
+2. `npm run build` OR `npm run watch` (if you want to play with the code)
+3. you may need to `npm install -g webpack` (if you get an error that webpack wasn't found)
 4. `npm start`
 
 ## Notes
